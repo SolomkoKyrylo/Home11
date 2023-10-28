@@ -13,15 +13,23 @@ class Field:
     value = property(get_value, set_value)
 
 class Phone(Field):
-    def set_value(self, value):
-        
+    @Field.value.getter
+    def value(self):
+        return self._value
+
+    @Field.value.setter
+    def value(self, value):
         if not isinstance(value, str) or not value.isdigit() or len(value) != 10:
             raise ValueError("Некоректний номер телефону")
         self._value = value
 
 class Birthday(Field):
-    def set_value(self, value):
-        
+    @Field.value.getter
+    def value(self):
+        return self._value
+
+    @Field.value.setter
+    def value(self, value):
         try:
             datetime.strptime(value, '%Y-%m-%d')
         except ValueError:
